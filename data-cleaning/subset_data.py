@@ -1,4 +1,26 @@
-import numpy as np 
+"""
+This script performs data cleaning and preprocessing on stock market data.
+
+Steps:
+1. Reads the stock market data from CSV files.
+2. Cleans the data by:
+    - Converting the 'Date' column to datetime format.
+    - Dropping rows with missing values in 'Date', 'Symbol', and 'Adj Close' columns.
+    - Filtering out rows where 'Adj Close' and 'Volume' are less than or equal to 0.
+    - Renaming columns for consistency.
+    - Filtering data to include only records from the year 2023 onwards.
+    - Removing duplicates in a date for the same ticker by grouping data by 'date' and 'ticker' and calculating the mean.
+    - Pivoting the DataFrame to have 'date' as the index and 'ticker' as columns.
+    - Dropping columns with more than 20% missing values.
+    - Forward-filling and backward-filling missing values.
+    - Calculating the percentage change of the data.
+    - Standardizing the data by subtracting the mean and dividing by the standard deviation.
+3. Saves the cleaned and preprocessed data to CSV files.
+
+Outputs:
+- 'stocks_cleaned.csv': Cleaned and preprocessed stock market data.
+- 'stocks_tickers.csv': List of stock tickers used in the cleaned data.
+"""
 import pandas as pd
 import re 
 from pathlib import Path
