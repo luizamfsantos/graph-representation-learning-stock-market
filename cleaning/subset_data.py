@@ -29,6 +29,7 @@ from pathlib import Path
 # Download the data, 
 # unzip it and save it 
 # in the data folder
+# run: bash cleaning/ingestion.sh
 
 # Read the data
 folder_path = Path(__file__).parent.parent / 'data' 
@@ -52,14 +53,14 @@ stocks_df.rename(
     'Symbol': 'ticker',
     'Date': 'date'}, inplace=True
 )
-stocks_df = stocks_df[stocks_df.date.dt.year >= 2023]
+stocks_df = stocks_df[stocks_df.date.dt.year >= 2022]
 stocks_df = stocks_df.groupby(['date', 'ticker'])\
     .mean().reset_index()
 stocks_df = stocks_df.pivot(
     index='date', columns='ticker', values='adj_close'
 )
 stocks_df = stocks_df.dropna(
-    thresh=int(stocks_df.shape[0]*0.8),axis=1)
+    thresh=int(stocks_df.shape[0]*0.6),axis=1)
 stocks_df = stocks_df.ffill().bfill()
 stocks_df = stocks_df.pct_change()
 stocks_df = stocks_df.dropna()
@@ -81,7 +82,7 @@ market_index_df = market_index_df[
 ]
 market_index_df = market_index_df[['Date', 'Adj Close']]
 market_index_df = market_index_df.rename(
-    columns={'Adj Close': 'index',
+    columns={'Adj Close': 'market_index',
     'Date': 'date'}
 )
 market_index_df.set_index('date', inplace=True)
@@ -105,3 +106,7 @@ market_index_df = market_index_df.loc[intersection_dates]
 # Save the cleaned data
 stocks_df.to_csv(folder_path / 'stocks_cleaned.csv')
 market_index_df.to_csv(folder_path / 'market_index_cleaned.csv')
+
+# Remove the original data files
+(folder_path / file_list[0]).unlink()
+(folder_path / file_list[1]).unlink()
