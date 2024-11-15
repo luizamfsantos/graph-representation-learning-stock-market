@@ -88,9 +88,20 @@ market_index_df.set_index('date', inplace=True)
 market_index_df.dropna(inplace=True)
 market_index_df = market_index_df.pct_change()
 
+market_index_normalized_df = (
+    market_index_df - market_index_df.mean()
+    ) / market_index_df.std()
+market_index_normalized_df.to_csv(
+    folder_path / 'market_index_normalized.csv'
+)
+
 # find the intersection of the two dataframes indexes
 intersection_dates = stocks_df.index.intersection(
     market_index_df.index
 )
 stocks_df = stocks_df.loc[intersection_dates]
 market_index_df = market_index_df.loc[intersection_dates]
+
+# Save the cleaned data
+stocks_df.to_csv(folder_path / 'stocks_cleaned.csv')
+market_index_df.to_csv(folder_path / 'market_index_cleaned.csv')
