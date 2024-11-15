@@ -96,6 +96,8 @@ class Graph:
                 mst.append(edge)
                 # union the sets
                 disjoint_set.union(node1, node2)
+        # create a graph from the minimum spanning tree
+        # to visualize the minimum spanning tree
         self.mst = Graph(self.nodes)
         for edge in mst:
             self.mst += edge
