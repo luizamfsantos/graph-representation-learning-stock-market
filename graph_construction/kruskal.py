@@ -54,7 +54,7 @@ class Graph:
         self.edge_list = []
 
     # overload add operator to add edges
-    def __add__(self, edge: tuple[str, str, int]):
+    def __add__(self, edge: tuple[str, str, float | int]):
         # check if the nodes exist
         self.check_node_exists(edge[0])
         self.check_node_exists(edge[1])
