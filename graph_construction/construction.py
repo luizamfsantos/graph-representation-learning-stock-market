@@ -2,6 +2,7 @@ from graph_construction.visualization import visualize_graph
 from graph_construction.kruskal import Graph
 import pandas as pd 
 from pathlib import Path
+import pickle
 
 
 # load data
@@ -24,6 +25,10 @@ mst = g.kruskal()
 # Visualize the graph and the minimum spanning tree
 visualize_graph(g, round_values=True)
 visualize_graph(g.mst, round_values=True)
+
+# Save pickle graph
+with open(folder_path / 'graph.pkl', 'wb') as f:
+    pickle.dump(g, f)
 
 # Subset for better visualization
 subset = ['ITUB4', 'LUPA3', 'M1TA34', 'ORCL34', 'HYPE3', 'GOGL35', 'FLRY3', 'EGIE3', 'DMVF3', 'COCA34', 'BHIA3', 'AERI3', 'PETR4']
