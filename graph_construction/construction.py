@@ -30,6 +30,14 @@ visualize_graph(g.mst, round_values=True)
 with open(folder_path / 'graph.pkl', 'wb') as f:
     pickle.dump(g, f)
 
+# Save edgelist for both mst and complete graph
+with open(folder_path / 'mst.edgelist', 'w') as f:
+    for edge in g.mst.edge_list:
+        f.write(f"{edge[0]} {edge[1]} {edge[2]}\n")
+with open(folder_path / 'complete_graph.edgelist', 'w') as f:
+    for edge in g.edge_list:
+        f.write(f"{edge[0]} {edge[1]} {edge[2]}\n")
+
 # Subset for better visualization
 subset = ['ITUB4', 'LUPA3', 'M1TA34', 'ORCL34', 'HYPE3', 'GOGL35', 'FLRY3', 'EGIE3', 'DMVF3', 'COCA34', 'BHIA3', 'AERI3', 'PETR4']
 assert len(subset) == len([node for node in subset if node in nodes]), 'The subset contains nodes that are not in the graph'
