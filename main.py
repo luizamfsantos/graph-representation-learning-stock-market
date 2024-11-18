@@ -20,10 +20,12 @@ def main():
     node2vec = Embeddings(
         'node2vec',
         training_data=data,
-        embedding_dim=128,
-        walk_length=20,
+        embedding_dim=25,
+        walk_length=10,
         context_size=10,
-        walks_per_node=20
+        walks_per_node=20,
+        p = 0.8,
+        q= 0.4,
     )
     total_loss = node2vec.train()
     print(f'Total loss: {total_loss}')  # TODO: replace print for logs
