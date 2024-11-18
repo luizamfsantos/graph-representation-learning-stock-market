@@ -18,8 +18,22 @@ class Embeddings:
                 context_size = self.kwargs.get('context_size', 20),
                 walks_per_node = self.kwargs.get('walks_per_node', 10),
                 num_negative_samples = self.kwargs.get('num_negative_samples', 1),
-                p = self.kwargs.get('p', 1),
-                q = self.kwargs.get('q', 1),
+                p = self.kwargs.get('p', 0.8),
+                q = self.kwargs.get('q', 0.2),
+                sparse=self.kwargs.get('sparse', True),
+            )
+        elif model.lower() == 'deepwalk':
+            # the same as node2vec but unbiased 
+            # so p = q = 1
+            self.model = Node2Vec(
+                edge_index = self.training_data.edge_index,
+                embedding_dim = self.kwargs.get('embedding_dim', 128),
+                walk_length = self.kwargs.get('walk_length', 80),
+                context_size = self.kwargs.get('context_size', 20),
+                walks_per_node = self.kwargs.get('walks_per_node', 10),
+                num_negative_samples = self.kwargs.get('num_negative_samples', 1),
+                p = 1,
+                q = 1,
                 sparse=self.kwargs.get('sparse', True),
             )
         else:
