@@ -29,21 +29,21 @@ def main():
     embeddings_np, node_mapping = node2vec.get_embeddings()
 
     # get clusters
-    n_clusters = 3  # TODO: loop over different cluster ranges to calculate loss
-    cluster_labels, kmeans = cluster_embeddings(
-        embeddings_np)
+    for n_clusters in range(3, 10):
+        cluster_labels, kmeans = cluster_embeddings(
+            embeddings_np)
 
-    # get ticker names
-    reverse_mapping = {idx: node for node, idx in node_mapping.items()}
-    clustered_nodes = {
-        reverse_mapping[idx]: cluster
-        for idx, cluster in enumerate(cluster_labels)
-    }
+        # get ticker names
+        reverse_mapping = {idx: node for node, idx in node_mapping.items()}
+        clustered_nodes = {
+            reverse_mapping[idx]: cluster
+            for idx, cluster in enumerate(cluster_labels)
+        }
 
-    # Save clusters
-    df = pd.DataFrame.from_dict(clustered_nodes,
-                                orient='index', columns=['cluster_label'])
-    df.to_csv(f'data/cluster_labels_{n_clusters}_clusters.csv')
+        # Save clusters
+        df = pd.DataFrame.from_dict(clustered_nodes,
+                                    orient='index', columns=['cluster_label'])
+        df.to_csv(f'data/cluster_labels_{n_clusters}_clusters.csv')
     # TODO: calculate loss
     return clustered_nodes
 
