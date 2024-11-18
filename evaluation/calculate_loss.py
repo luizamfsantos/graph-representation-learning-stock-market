@@ -7,12 +7,14 @@ folder_path = Path(__file__).parent.parent / 'data'
 corr_matrix = pd.read_csv(
     folder_path / 'correlation_matrix.csv',
     index_col=0)
+corr_matrix = corr_matrix.sort_index(axis=0).sort_index(axis=1)
 
 # load labels
-n_clusters = 3
+n_clusters = 3 # TODO: loop over the files for different cluster numbers
 cluster_labels = pd.read_csv(
     folder_path / f'cluster_labels_{n_clusters}_clusters.csv',
     index_col=0)
+cluster_labels = cluster_labels.sort_index(axis=0)
 
 # TODO: ensure that both df are sorted by index/col in the same way
 
