@@ -16,6 +16,7 @@ def main():
     data = dataset[0]
 
     # generate embeddings
+    # TODO: add other embeddings
     node2vec = Embeddings(
         'node2vec',
         training_data=data,
