@@ -31,7 +31,8 @@ def main():
     # get clusters
     for n_clusters in range(3, 10):
         cluster_labels, kmeans = cluster_embeddings(
-            embeddings_np)
+            embeddings_np,
+            n_clusters=n_clusters)
 
         # get ticker names
         reverse_mapping = {idx: node for node, idx in node_mapping.items()}
