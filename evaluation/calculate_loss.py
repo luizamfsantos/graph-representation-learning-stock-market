@@ -67,12 +67,12 @@ def main(folder_path, n_clusters_list, rho_min_list):
 if __name__ == '__main__':
     # Parameters
     folder_path = Path(__file__).parent.parent / 'data'
-    #n_clusters_list = [2, 3, 4, 5]  # Define the list of n_clusters to evaluate
     n_clusters_list = [3, 4, 5, 6, 7, 8, 9]  # Define the list of n_clusters to evaluate
     rho_min_list = [0.8, 0.85, 0.9, 0.95]  # Define the list of rho_min values to evaluate
 
     # Run evaluation
     results_df = main(folder_path, n_clusters_list, rho_min_list)
 
-    # Print or save results
+    # Print and save results
     print(results_df)
+    results_df.to_csv(folder_path / 'loss_results.csv', index=False)
