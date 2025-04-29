@@ -1,5 +1,4 @@
-import torch
-import pandas as pd 
+import pandas as pd
 from clustering.kmeans import cluster_embeddings
 from graph_embeddings.embeddings import Embeddings
 from transformations.pytorch_datasets import StockGraphDataset
@@ -24,8 +23,8 @@ def main():
         walk_length=10,
         context_size=10,
         walks_per_node=20,
-        p = 0.8,
-        q= 0.4,
+        p=0.8,
+        q=0.4,
     )
     total_loss = node2vec.train()
     print(f'Total loss: {total_loss}')  # TODO: replace print for logs

@@ -13,9 +13,11 @@ class RandomData:
         ])
         self.node_mapping = {'PETR4': 0, 'VALE3': 1, 'ITUB4': 2}
 
+
 @pytest.fixture
 def data():
     return RandomData()
+
 
 @pytest.fixture
 def node2vec(data):
@@ -31,9 +33,11 @@ def node2vec(data):
 def test_initialization(node2vec):
     assert node2vec.model.__class__.__name__ == 'Node2Vec'
 
+
 def test_train(node2vec):
     loss_percent = node2vec.train()
     assert loss_percent > 0
+
 
 def test_get_embeddings(node2vec):
     embeddings, node_mapping = node2vec.get_embeddings()

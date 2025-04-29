@@ -1,16 +1,17 @@
-import numpy as np 
+import numpy as np
 from graph_construction.visualization import visualize_graph
+
 
 class DisjointSet:
     def __init__(self, nodes: list[str]):
-        self.parent = {} # parent of the node
-        self.rank = {} # rank of the node
+        self.parent = {}  # parent of the node
+        self.rank = {}  # rank of the node
         for node in nodes:
             self.make_set(node)
 
     def make_set(self, node: str):
-        self.parent[node] = node # parent of itself
-        self.rank[node] = 0 # rank of itself
+        self.parent[node] = node  # parent of itself
+        self.rank[node] = 0  # rank of itself
 
     def find(self, node: str):
         """ Function to find the representative of the set """
@@ -41,15 +42,14 @@ class DisjointSet:
         else:
             # equal rank, merge any set into any set
             self.parent[parent1] = parent2
-            self.rank[parent2] += 1 # increase the rank of the set
-
+            self.rank[parent2] += 1  # increase the rank of the set
 
 
 class Graph:
     def __init__(
-        self, 
+        self,
         nodes: list[str],
-        ):
+    ):
         self.nodes = nodes
         self.edge_list = []
 
@@ -65,15 +65,15 @@ class Graph:
         return self
 
     def check_node_exists(
-        self, 
-        node: str):
+            self,
+            node: str):
         if node in self.nodes:
             return True
-        raise ValueError(f"Edge {edge} does not exist in the graph")
+        raise ValueError(f"Node {node} does not exist in the graph")
 
     def check_edge_exists(
-        self, 
-        edge: tuple[str, str, int]):
+            self,
+            edge: tuple[str, str, int]):
         if edge in self.edge_list:
             return True
         return False
@@ -103,10 +103,11 @@ class Graph:
             self.mst += edge
         return mst
 
+
 def create_fully_connected_graph(
     nodes: list[str],
     weights: list[int],
-    ):
+):
     graph = Graph(nodes)
     for i in range(len(nodes)):
         for j in range(i+1, len(nodes)):
@@ -119,7 +120,7 @@ if __name__ == '__main__':
     min_weight = 1
     nodes = ['A', 'B', 'C', 'D', 'E']
     weights = np.random.randint(
-        min_weight, 
+        min_weight,
         max_weight,
         (len(nodes), len(nodes)))
     graph = create_fully_connected_graph(
@@ -130,4 +131,3 @@ if __name__ == '__main__':
     print(mst)
     visualize_graph(graph)
     visualize_graph(graph.mst)
-    

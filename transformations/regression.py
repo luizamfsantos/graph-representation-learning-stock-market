@@ -1,6 +1,8 @@
 """
-This script performs linear regression on stock prices against a market index and calculates the residuals.
-Residuals is the non-systematic part of the stock return that is not explained by the market index.
+This script performs linear regression on stock prices against a market index
+    and calculates the residuals.
+Residuals is the non-systematic part of the stock return that is not explained
+    by the market index.
 
 Modules:
     pandas
@@ -16,7 +18,8 @@ Variables:
     file_list (list): List of filenames for stock and market index data.
     stocks_df (DataFrame): DataFrame containing stock prices.
     market_index_df (DataFrame): DataFrame containing market index values.
-    merged_df (DataFrame): DataFrame containing merged stock and market index data.
+    merged_df (DataFrame): DataFrame containing merged stock and market index
+        data.
     residuals_df (DataFrame): DataFrame to store residuals of the regression.
 
 Procedure:
@@ -24,10 +27,11 @@ Procedure:
     2. Merge the stock and market index data on the date index.
     3. Initialize an empty DataFrame to store residuals.
     4. For each stock, perform linear regression against the market index.
-    5. Calculate residuals by subtracting the predicted stock return from the actual stock return.
+    5. Calculate residuals by subtracting the predicted stock return from the
+        actual stock return.
     6. Save the residuals to a CSV file.
 """
-import pandas as pd 
+import pandas as pd
 import numpy as np
 from pathlib import Path
 from sklearn.linear_model import LinearRegression
@@ -36,11 +40,11 @@ from sklearn.linear_model import LinearRegression
 folder_path = Path(__file__).parent.parent / 'data'
 file_list = ['stocks_cleaned.csv', 'market_index_cleaned.csv']
 stocks_df = pd.read_csv(folder_path / file_list[0],
-index_col='date', parse_dates=True)
+                        index_col='date', parse_dates=True)
 market_index_df = pd.read_csv(folder_path / file_list[1],
-index_col='date', parse_dates=True)
-merged_df = pd.merge(stocks_df, 
-market_index_df, left_index=True, right_index=True)
+                              index_col='date', parse_dates=True)
+merged_df = pd.merge(stocks_df,
+                     market_index_df, left_index=True, right_index=True)
 
 residuals_df = pd.DataFrame(
     index=stocks_df.index, columns=stocks_df.columns)

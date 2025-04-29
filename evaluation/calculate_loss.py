@@ -23,7 +23,8 @@ def load_data(folder_path, n_clusters):
 def calculate_cluster_matrices(cluster_labels):
     """Create same-cluster and different-cluster matrices."""
     same_cluster_matrix = (
-        cluster_labels.values[:, np.newaxis] == cluster_labels.values[np.newaxis, :]).astype(float).squeeze()
+        cluster_labels.values[:, np.newaxis] == cluster_labels.values[
+            np.newaxis, :]).astype(float).squeeze()
     diff_cluster_matrix = -1 * (same_cluster_matrix - 1).astype(int)
     return same_cluster_matrix, diff_cluster_matrix
 
@@ -42,7 +43,7 @@ def evaluate_loss(diff_cluster_matrix, high_corr_matrix, n_stocks):
         diff_cluster_matrix, high_corr_matrix).astype(int)
     misses_count = np.sum(miss_matrix)
     # misses over total edges
-    misses_over_total_edges = misses_count / (n_stocks ** 2)  
+    misses_over_total_edges = misses_count / (n_stocks ** 2)
     # misses over total high correlation edges
     misses_over_total_high_corr = misses_count / np.sum(high_corr_matrix)
     return misses_count, misses_over_total_edges, misses_over_total_high_corr
@@ -62,8 +63,10 @@ def main(folder_path, n_clusters_list, rho_min_list):
         for rho_min in rho_min_list:
             high_corr_matrix = calculate_high_correlation_matrix(
                 corr_matrix, rho_min)
-            misses_count, misses_over_total_edges, misses_over_total_high_corr \
-                = evaluate_loss(diff_cluster_matrix, high_corr_matrix, n_stocks)
+            misses_count, misses_over_total_edges, \
+                misses_over_total_high_corr \
+                = evaluate_loss(
+                    diff_cluster_matrix, high_corr_matrix, n_stocks)
 
             results.append({
                 'n_clusters': n_clusters,
@@ -83,7 +86,7 @@ if __name__ == '__main__':
     # Define the list of n_clusters to evaluate
     n_clusters_list = [3, 4, 5, 6, 7, 8, 9]
     # Define the list of rho_min values to evaluate
-    rho_min_list = np.arange(0,1,0.05)
+    rho_min_list = np.arange(0, 1, 0.05)
 
     # Run evaluation
     results_df = main(folder_path, n_clusters_list, rho_min_list)

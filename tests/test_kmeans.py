@@ -1,15 +1,17 @@
-import pytest 
+import pytest
 import numpy as np
 from clustering.kmeans import cluster_embeddings
 
 
 @pytest.fixture
 def embeddings():
-    return np.random.rand(10, 5) # num_nodes x embedding_dim
+    return np.random.rand(10, 5)  # num_nodes x embedding_dim
+
 
 @pytest.mark.parametrize("n_clusters", [3, 5, 10])
 def test_cluster_embeddings(embeddings, n_clusters):
-    cluster_labels, kmeans = cluster_embeddings(embeddings, n_clusters=n_clusters)
+    cluster_labels, kmeans = cluster_embeddings(
+        embeddings, n_clusters=n_clusters)
     assert len(cluster_labels) == 10
     assert len(kmeans.cluster_centers_) == n_clusters
     assert kmeans.n_clusters == n_clusters

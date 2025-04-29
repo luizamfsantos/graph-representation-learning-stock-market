@@ -1,5 +1,5 @@
 import os
-import pandas as pd 
+import pandas as pd
 import numpy as np
 import torch
 from torch_geometric.data import InMemoryDataset, Data
@@ -14,14 +14,16 @@ class StockGraphDataset(InMemoryDataset):
         transform: Optional[Callable] = None,  # Data transformation
         pre_transform: Optional[Callable] = None,  # Pre-transformation
     ):
-        """ 
+        """
         Custom dataset for stock market graph data
 
         Args:
             root (str): Path to the dataset directory
             edgelist_file (str): Path to the edgelist file
-            transform (Optional[Callable], optional): Data transformation. Defaults to None.
-            pre_transform (Optional[Callable], optional): Pre-transformation. Defaults to None.
+            transform (Optional[Callable], optional): Data transformation.
+                Defaults to None.
+            pre_transform (Optional[Callable], optional): Pre-transformation.
+                Defaults to None.
         """
         self.edgelist_file = edgelist_file
         super().__init__(root, transform, pre_transform)
@@ -56,16 +58,16 @@ class StockGraphDataset(InMemoryDataset):
         # Convert edges to tensor format
         edge_index = torch.tensor(
             [[node_to_idx[source], node_to_idx[target]]
-            for source, target in zip(df['source'], df['target'])],
+             for source, target in zip(df['source'], df['target'])],
             dtype=torch.long).t()
 
         # Convert weights to PyTorch tensor
         edge_attr = torch.tensor(df['weight'].values,
-         dtype=torch.float).reshape(-1, 1)
-        
+                                 dtype=torch.float).reshape(-1, 1)
+
         num_nodes = len(unique_nodes)
-        x = torch.arange(num_nodes, 
-        dtype=torch.float).reshape(-1, 1)
+        x = torch.arange(num_nodes,
+                         dtype=torch.float).reshape(-1, 1)
 
         # Create the data object
         data = Data(
@@ -90,6 +92,7 @@ class StockGraphDataset(InMemoryDataset):
 
     def __str__(self) -> str:
         return self.__repr__()
+
 
 if __name__ == '__main__':
     dataset = StockGraphDataset(
